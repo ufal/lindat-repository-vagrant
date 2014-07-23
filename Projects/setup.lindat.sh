@@ -58,12 +58,6 @@ cd  $DSPACE_SOURCE_DIRECTORY/scripts
 make create_utilities_database
 make setup
 make new_deploy
-# tomcat7 does not like our symlinks - hack it
-sudo mv $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link
-sudo mkdir $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat 
-sudo cp -R $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link/* $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat
-
-
 
 #
 #
@@ -73,6 +67,11 @@ if [ ! -f $TOMCAT_WEBAPPS/oai ]; then
     ln -s $DSPACE_INSTALLATION_DIRECTORY/webapps/solr $TOMCAT_WEBAPPS/solr
     ln -s $DSPACE_INSTALLATION_DIRECTORY/webapps/xmlui $TOMCAT_WEBAPPS/xmlui
 fi
+
+# tomcat7 does not like our symlinks - hack it
+sudo mv $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link
+sudo mkdir $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat 
+sudo cp -R $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link/* $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat
 
 #
 #

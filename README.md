@@ -48,10 +48,10 @@ The below snippet shows several variables passed from Vagrant to puppet provisio
 
 ```
         puppet.facter = {
-        "java_version"  => "7",
-        "tom_version"   => "7",
-        "repo_branch"   => "master-dev",
-        "fqdn"          => "dspace.lindat.dev",
+            "java_version"  => "7",
+            "tom_version"   => "7",
+            "repo_branch"   => "master-dev",
+            "fqdn"          => "dspace.lindat.dev",
         }
 ```
 
