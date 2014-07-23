@@ -1,3 +1,6 @@
+# disable line endings normalisation
+* -text
+
 # For any Puppet templates (.erb), ensure LF (Unix) line endings are
 # ALWAYS kept (even on Windows), as these templates represent Linux files.
 *.erb text eol=lf
