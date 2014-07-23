@@ -1,4 +1,5 @@
-# DSpace build.properties
+# DSpace build.properties hacked by LINDAT/CLARIN
+#
 # This file should be customised to suit your build environment.
 # Note that not all configuration is handled here, only the most common properties that tend to differ between build environments. 
 # For adjusting global settings or more complex settings, edit the relevant config file.
@@ -11,16 +12,16 @@
 # to install DSpace. NOTE: this value will be copied over to the
 # "dspace.dir" setting in the final "dspace.cfg" file. It can be
 # modified later on in your "dspace.cfg", if needed.
-dspace.install.dir=/home/vagrant/dspace
+dspace.install.dir=/installations/dspace/dspace-orig-<%= repo_branch %>
 
 # DSpace host name - should match base URL.  Do not include port number
-dspace.hostname = localhost
+dspace.hostname = <%= fqdn %>
 
 # DSpace base host URL.  Include port number etc.
-dspace.baseUrl = http://localhost:8080
+dspace.baseUrl = http://<%= fqdn %>:8080
 
 # Name of the site
-dspace.name = DSpace Master on Vagrant
+dspace.name = DSpace <%= repo_branch %> branch on LINDAT/CLARIN vagrant
 
 # Solr server
 solr.server=http://localhost:8080/solr
@@ -41,12 +42,6 @@ db.driver=org.postgresql.Driver
 db.url=jdbc:postgresql://localhost:5432/dspace
 db.username=dspace
 db.password=dspace
-
-# oracle
-#db.driver= oracle.jdbc.OracleDriver
-#db.url=jdbc:oracle:thin:@localhost:1521:orcl
-#db.username=
-#db.password=
 
 # Schema name - if your database contains multiple schemas, you can avoid problems with
 # retrieving the definitions of duplicate object names by specifying
@@ -73,9 +68,9 @@ db.poolname = dspacepool
 # EMAIL CONFIGURATION #
 #######################
 
-#TODO
+#this has to be filled othewise DSpace (4_x) crashes in CP
 # SMTP mail server
-mail.server = 
+mail.server = localhost 
 
 # SMTP mail server authentication username and password (if required)
 # mail.server.username = myusername
@@ -87,15 +82,15 @@ mail.server.password=
 mail.server.port = 25
 
 # From address for mail
-mail.from.address = dspace-noreply@myu.edu
+mail.from.address = dspace-noreply@<%= fqdn %>
 
 #TODO
 # Currently limited to one recipient!
-mail.feedback.recipient = dspace@myu.edu
+mail.feedback.recipient = dspace@<%= fqdn %>
 
 #TODO
 # General site administration (Webmaster) e-mail
-mail.admin = dspace@myu.edu
+mail.admin = dspace@<%= fqdn %>
 
 # Recipient for server errors and alerts
 #mail.alert.recipient = email-address-here
@@ -130,7 +125,7 @@ handle.canonical.prefix = ${dspace.url}/handle/
 #handle.canonical.prefix = http://hdl.handle.net/
 
 # CNRI Handle prefix
-handle.prefix = 10673
+handle.prefix = 99999999
 
 #######################
 # PROXY CONFIGURATION #

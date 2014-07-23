@@ -12,12 +12,12 @@
 # This class is not intended to be used directly.
 # It may be imported or inherited by other classes
 #
-class tomcat::params ( $version = '' ) {
+class tomcat::params () {
 
   ### Application related parameters
 
-  # Let's deal with versions madness
-  $real_version = $version ? {
+  # lindat hacked this
+  $real_version = $::tom_version ? {
     ''    => $::operatingsystem ? {
       ubuntu                          => '6',
       debian                          => $::lsbmajdistrelease ? {
@@ -38,7 +38,7 @@ class tomcat::params ( $version = '' ) {
       /(?i:SLES|OpenSuSe)/            => '6',
       default                         => '6',
     },
-    default => $version,
+    default => $::tom_version,
   }
 
   $pkgver = "tomcat${real_version}"

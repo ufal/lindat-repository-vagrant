@@ -1,3 +1,5 @@
+# Comes from https://github.com/DSpace/vagrant-dspace
+# Hacked by LINDAT/CLARIN
 # Definition: dspace::install
 #
 # Each time this is called, the following happens:
@@ -35,28 +37,23 @@
 # }
 #
 define dspace::install ($owner,
-                        $version,
                         $group             = $owner,
-                        $src_dir           = "/home/${owner}/dspace-src", 
+                        $src_dir           = "/home/${owner}/Projects/dspace-src", 
                         $install_dir       = "/home/${owner}/dspace",
-                        $service_owner     = "${owner}", 
-                        $service_group     = "${owner}",
-
-# pull the following from Hiera
-
-                        $git_repo          = hiera('git_repo'),
-                        $git_branch        = hiera('git_branch'),
-                        $mvn_params        = hiera('mvn_params'),
-                        $ant_installer_dir = hiera('ant_installer_dir'),
-                        $admin_firstname   = hiera(admin_firstname),
-                        $admin_lastname    = hiera(admin_lastname),
-                        $admin_email       = hiera(admin_email),
-                        $admin_passwd      = hiera(admin_passwd),
-                        $admin_language    = hiera(admin_language),
+                        $service_owner     = $owner, 
+                        $service_group     = $owner,
+                        $ant_installer_dir = "$src_dir/dspace/target/dspace-installer",
+                        $git_repo          = 'https://github.com/DSpace/DSpace.git',
+                        $git_branch        = 'master',
+                        $mvn_params        = '-Denv=vagrant',
+                        $admin_firstname   = 'DSpaceDemo',
+                        $admin_lastname    = 'Admin',
+                        $admin_email       = 'dspacedemo+admin@gmail.com',
+                        $admin_passwd      = 'vagrant',
+                        $admin_language    = 'en',
                         $ensure            = present)
 
 {
-
 
     # ensure that the install_dir exists, and has proper permissions
     file { "${install_dir}":
@@ -68,16 +65,6 @@ define dspace::install ($owner,
 
 ->
 
-    # Ensure a custom ~/.profile exists (with JAVA_HOME & MAVEN_HOME defined)
-    file { "/home/${owner}/.profile" :
-        ensure  => file,
-        owner   => $owner,
-        group   => $group,
-        content => template("dspace/profile.erb"),
-    }
- 
-->
-   
     # Clone DSpace GitHub to ~/dspace-src
     exec { "git clone ${git_repo} ${src_dir}":
         command   => "git clone ${git_repo} ${src_dir}; chown -R ${owner}:${group} ${src_dir}",
@@ -85,7 +72,6 @@ define dspace::install ($owner,
         logoutput => true,
         tries     => 2, # try 2 times, with a ten minute timeout, GitHub is sometimes slow, if it's too slow, might as well get everything else done
         timeout   => 600,
-        require   => [Package["git"], Exec["Verify SSH connection to GitHub works?"]],
     }
 
 ->
@@ -120,7 +106,6 @@ define dspace::install ($owner,
      command   => "mvn package ${mvn_params}",
      cwd       => "${src_dir}", # Run command from this directory
      user      => $owner,
-     creates   => $ant_installer_dir, # Only run if Ant installer directory doesn't already exist
      timeout   => 0, # Disable timeout. This build takes a while!
      logoutput => true,	# Send stdout to puppet log file (if any)
    }
@@ -129,11 +114,11 @@ define dspace::install ($owner,
 
    # Install DSpace (via Ant)
    exec { "Install DSpace to ${install_dir}":
-     command   => "ant fresh_install",
-     cwd       => $ant_installer_dir,	# Run command from this directory
-     user      => $owner,
-     creates   => "${install_dir}/webapps/xmlui",	# Only run if XMLUI webapp doesn't yet exist (NOTE: we check for a webapp's existence since this is the *last step* of the install process)
-     logoutput => true,	# Send stdout to puppet log file (if any)
+     command    => "bash -c \"cd $ant_installer_dir && ant fresh_install\"",
+     cwd        => "/home",
+     user       => $owner,
+     path       => ["/bin/", "/usr/bin", "/usr/sbin"], 
+     logoutput  => true,	# Send stdout to puppet log file (if any)
    } 
 
 ->

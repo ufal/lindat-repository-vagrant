@@ -16,7 +16,7 @@ define tomcat::instance (
 
   $runtime_dir                  = '',
 
-  $java_opts                    = '-Djava.awt.headless=true -Xmx128m  -XX:+UseConcMarkSweepGC',
+  $java_opts                    = "-Dcom.sun.management.jmxremote=true -Djava.awt.headless=true -Xmx1024m -XX:+UseConcMarkSweepGC -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n",
   $catalina_opts                = '',
   $java_home                    = '',
 
