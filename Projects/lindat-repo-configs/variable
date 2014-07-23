@@ -1,0 +1,100 @@
+#/bin/bash
+
+DIRECTORY_POSTGRESQL:=/var/lib/postgresql
+
+
+TOM_VERSION:=$(shell (cat /etc/profile.d/common.sh  | grep TOM_VERSION | sed 's/.*TOM_VERSION=\(.\)/\1/'))
+
+# Local Configuration
+CONFIG:=$(BASE)/../config/local.conf
+CONFIG_EXISTS:=$(shell (if [ -e $(CONFIG) ]; then echo 1; else echo 0; fi ))
+
+
+# Dspace Configuration
+DSPACE_CFG:=$(BASE)/../sources/dspace/config/dspace.cfg
+DSPACE_CFG_EXISTS:=$(shell (if [ -e $(DSPACE_CFG) ]; then echo 1; else echo 0; fi ))
+
+DIRECTORY_INSTALLATION:=$(shell if [ "$(CONFIG_EXISTS)" -eq "1" ]; then cat $(CONFIG); fi | grep -e "^ufal.dspace.dir = " | sed 's/.*=[[:space:]]\([^[:space:]]*\)/\1/g')
+
+DATABASE_NAME:=$(shell if [ "$(CONFIG_EXISTS)" -eq "1" ]; then cat $(CONFIG); fi | grep -e "^ufal.database = " | sed 's/.*=[[:space:]]\([^[:space:]]*\)/\1/g')
+
+# DIRECTORY_VERSION gives us the directory where one of the makefile's links is present
+DIRECTORY_VERSION:=$(shell pwd)
+
+# Source for the DSpace source code
+DIRECTORY_SOURCE:=$(BASE)/../sources
+
+# Target build directory
+DIRECTORY_BUILD:=$(DIRECTORY_SOURCE)/dspace/target/dspace-build
+
+# Logs directory
+DIRECTORY_LOGS:=$(BASE)/../logs
+
+# Utilities directory
+DIRECTORY_UTILITIES:=$(BASE)/../sources/utilities
+
+UTILITIES_DATABASE_NAME:=$(shell if [ "$(CONFIG_EXISTS)" -eq "1" ]; then cat $(CONFIG); fi | grep -e "^ufal.utilities.database" | sed 's/.*=\s*\(.*\)\s*/\1/g')
+
+# Virtual Host Name
+HOST_NAME:=$(shell echo "$(dir $(BASE))" | sed 's/.*\/\(.*\)\//\1/')
+
+# Virtual Host XML
+HOST_XML:=\
+	"\t <Host name=\"localhost/$(HOST_NAME)\" debug=\"0\" \n \
+         \t  appBase=\"$(DIRECTORY_INSTALLATION)/webapps\" \n \
+         \t  autoDeploy=\"true\" unpackWARs=\"true\"> \n \
+         \t\t <Valve className=\"org.apache.catalina.valves.AccessLogValve\" \n \
+         \t\t         directory=\"$(DIRECTORY_INSTALLATION)/log\" \n \
+         \t\t         prefix=\"tomcat_access.\" \n \
+         \t\t         suffix=\".log\" \n \
+         \t\t         pattern=\"common\" \n \
+         \t\t         resolveHost=\"false\"/> \n \
+         \t\t <Context path=\"/xmlui\" docBase=\"$(DIRECTORY_INSTALLATION)/webapps/xmlui\" debug=\"1\" \n \
+         \t\t        reloadable=\"true\" cachingAllowed=\"false\" \n \
+         \t\t        allowLinking=\"true\"/> \n \
+         \t\t <Context path=\"/solr\" docBase=\"$(DIRECTORY_INSTALLATION)/webapps/solr\" debug=\"1\" \n \
+         \t\t        reloadable=\"true\" cachingAllowed=\"false\" \n \
+         \t\t        allowLinking=\"true\"/> \n \
+        \t</Host> \n"
+
+TMP_FILE:=$(shell mktemp)
+
+# Dspace and tomcat linus users and groups
+DSPACE_USER:=dspace
+TOMCAT_USER:=tomcat$(TOM_VERSION)
+TOMCAT_GROUP:=tomcat$(TOM_VERSION)
+
+# executables
+TOMCAT:=/etc/init.d/$(TOMCAT_USER)
+APACHE:=/etc/init.d/apache2
+SHIB:=/etc/init.d/shibboleth
+HANDLE_SERVER:=/etc/init.d/handle-server
+
+
+# Tomcat Configurations only for development
+TOMCAT_CONF:=/etc/$(TOMCAT_USER)
+#TOMCAT_MANAGER_ADMIN:=$(shell sudo cat $(TOMCAT_CONF)/tomcat-users.xml | grep "<user.*manager.*/>" | head -n 1 | sed 's/.*username="\([^"]*\)".*/\1/')
+#TOMCAT_MANAGER_PASS:=$(shell sudo cat $(TOMCAT_CONF)/tomcat-users.xml | grep "<user.*manager.*/>" | head -n 1 | sed 's/.*password="\([^"]*\)".*/\1/')
+#TOMCAT_MANAGER_URL:=http://ufal-point-dev.ms.mff.cuni.cz:8080/manager/reload?path=
+
+DIRECTORY_BACKUP_CONFIGURATION:=$(BASE)
+
+RESTART_LOG:=~/restart.log
+
+_backup2l:=/usr/sbin/backup2l
+
+# Build time
+BUILD_TIME:="\#UFAL Build time\nufal.build_time=`date`"
+
+# Restore database
+RESTORE_FROM_DATABASE=prod-dspace-1.8
+
+# Restore direcotry
+# default is current directory
+RESTORE_DIRECTORY=.
+
+# Reload this app
+RELOAD_APP=xmlui
+
+# Lindat Common Theme
+LINDAT_COMMON_THEME:=$(shell if [ "$(CONFIG_EXISTS)" -eq "1" ]; then cat $(CONFIG); fi | grep -e "^lindat.common.theme" | sed 's/.*=\s*\(.*\)\s*/\1/g')

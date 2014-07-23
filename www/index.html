@@ -1,0 +1,126 @@
+
+<html>
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>-->
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+            var hostname = window.location.hostname.replace(/\/$/, '');
+            $( ".prepend-hostname" ).each(function() {
+                $(this).attr( 'href', '//' + hostname + $(this).attr('href') );
+            });
+        });
+    </script>
+    <style>
+        .alert {
+            padding: 3px;
+        }
+        .btn {
+            font-size: 14px;
+        }
+        .btn-inline {
+            margin-right: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            display: inline !important;
+        }
+        .is-faded {
+            opacity: 0.3;
+            filter: alpha(opacity=30);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="row" style="margin-top: 10px">
+
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h1 style="margin-left:-60px;"><a href="http://lindat.cz">LINDAT/CLARIN</a></h1>
+            <hr />
+            <a type="button" class="btn btn-primary btn-lg btn-block prepend-hostname btn-inline" target="_blank" 
+                href=":8080/xmlui">Repository</a>
+            <a type="button" class="btn btn-primary btn-lg btn-block prepend-hostname btn-inline" target="_blank" 
+                href=":8080/oai/request?verb=Identify">OAI-PMH</a>
+            <a type="button" class="btn btn-primary btn-lg btn-block prepend-hostname btn-inline" target="_blank" 
+                href=":8080/solr">SOLR</a>
+            <a type="button" class="btn btn-primary btn-lg btn-block prepend-hostname btn-inline is-faded" target="_blank" 
+                href=":8080/jspui">JSPUI</a>
+            <hr />
+        
+            <a type="button" class="btn btn-primary btn-lg btn-block btn-inline" target="_blank" 
+                href="./nagios3/">nagios</a>
+            <a type="button" class="btn btn-primary btn-lg btn-block prepend-hostname btn-inline" target="_blank" 
+                href=":2812/">monit</a>
+            <a type="button" class="btn btn-primary btn-lg btn-block btn-inline" target="_blank" 
+                href="./munin/">munin</a>
+            <hr />
+            
+            <a type="button" class="btn btn-primary btn-lg btn-block btn-inline" target="_blank" 
+                href="./phppgadmin/">phppgadmin</a>
+            <hr />
+                
+            <a type="button" class="btn btn-primary btn-lg btn-block btn-inline btn-inline" target="_blank" 
+                href="./">apache</a>
+            <a type="button" class="btn btn-primary btn-lg btn-block btn-inline" target="_blank" 
+                href="./info.php">php info</a>
+            <a type="button" class="btn btn-primary btn-lg btn-block prepend-hostname btn-inline" target="_blank" 
+                href=":8080/">tomcat</a>
+            <a type="button" class="btn btn-primary btn-lg btn-block prepend-hostname btn-inline" target="_blank" 
+                href=":8080/probe">probe</a>
+            <hr />
+            
+            <a type="button" class="btn btn-primary btn-lg btn-block prepend-hostname btn-inline" target="_blank" 
+                href=":8081/">jenkins</a>
+            <hr />
+        </div>
+    
+</div>
+
+<div class="row" style="margin-top: 10px">
+
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h2>Few notes and facts</h2>
+        <ul>
+            <li>credentials
+                <div class="alert alert-warning" role="alert">
+                <pre>
+# nagios               - nagiosadmin          | dspace
+# postgresql           - dspace               | dspace
+# tomcat/nagios        - tomcat               | dspace
+# monit                - admin                | dspace
+# [dspacev4] dspace    - dspace@lindat.cz     | dspace
+</pre> 
+                </div></li>
+
+            <li>hostname
+                <div class="alert alert-info" role="alert">
+                <strong>lindat box: <a href="dspace.lindat.dev" target="_blank" >dspace.lindat.dev</a></strong><br /> 
+                dspace4 box: <a href="dspace.lindat.dev" target="_blank" >dspace.dev</a>
+                </div></li>
+            <li>ip address (33.33.33.XX)
+                <div class="alert alert-info" role="alert">
+                <strong>lindat box: <a href="33.33.33.78" target="_blank" >33.33.33.78</a><br /></strong> 
+                dspace4 box: <a href="33.33.33.79" target="_blank" >33.33.33.79</a>
+                </div></li>
+
+            <li class="alert alert-danger" role="alert">The host for the lindat box is <strong>dspace.lindat.dev</strong>
+            so update your hosts file (e.g., on windows add <br/>
+            <strong>33.33.33.78 dspace.lindat.dev</strong><br/>
+            to c:\Windows\System32\drivers\etc\hosts).
+            The host for the dspace4 box is dspace.dev
+            </li>
+        
+            <li class="alert alert-warning" role="alert">solr was made available by removing filter LocalHostRestrictionFilter 
+            from tomcat's webapps/solr/WEB-INF/web.xml - in case of redeploying you need to do it again 
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+</body>
+</html>
