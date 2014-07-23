@@ -71,7 +71,7 @@ define dspace::install ($owner,
         creates   => $src_dir,
         logoutput => true,
         tries     => 2, # try 2 times, with a ten minute timeout, GitHub is sometimes slow, if it's too slow, might as well get everything else done
-        timeout   => 600,
+        timeout   => 0,
     }
 
 ->
