@@ -1,0 +1,29 @@
+{
+  "description": "Install and configure phpPgAdmin",
+  "summary": "Install and configure phpPgAdmin",
+  "source": "git://github.com/knowshan/puppet-phppgadmin.git",
+  "checksums": {
+    "manifests/params.pp": "5f61dabbcb2bf06ad7ad25f3d910003e",
+    "README.md": "567b33b88f244752e598ae8cf8fa83e9",
+    "spec/classes/params_spec.rb": "7dc15f2c8ceedb26dd759dcd23bdbb81",
+    "spec/classes/init_spec.rb": "95d987adc0dfd86949d07cffbb0ac7c2",
+    "tests/init.pp": "607a65190fb9ac65f6646d875805b578",
+    "Modulefile": "2d7b7166f38f602c8f6fd815452ddba7",
+    "templates/Ubuntu/phppgadmin.conf.erb": "aed421aa74d5d53aab7099e8043db250",
+    "spec/spec_helper.rb": "1ada069d7869a2d9223d2e6a4bf3b2a7",
+    "templates/CentOS/phpPgAdmin.conf.erb": "a8010f14c3c6809e306ad081d41ac282",
+    "Rakefile": "11ca38083b46a8be9cb6ec612243838a",
+    "manifests/init.pp": "d68d046054680489ee8d634ec6397b1b"
+  },
+  "types": [
+
+  ],
+  "dependencies": [
+
+  ],
+  "author": "Shantanu Pavgi",
+  "version": "0.0.3",
+  "name": "knowshan-phppgadmin",
+  "project_page": "https://github.com/knowshan/puppet-phppgadmin",
+  "license": "Apache License, Version 2.0"
+}

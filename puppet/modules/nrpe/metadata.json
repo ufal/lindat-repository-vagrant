@@ -1,0 +1,39 @@
+{
+  "name": "example42-nrpe",
+  "version": "2.0.11",
+  "summary": "Puppet module for nrpe",
+  "author": "Alessandro Franceschi",
+  "description": "This module installs and manages nrpe. Check README.rdoc for details. Puppi is required for some common functions: you can install them without using the whole module. Monitor and firewall dependencies are needed only if the relevant features are enabled",
+  "dependencies": [
+    {
+      "name": "example42/puppi",
+      "version_requirement": ">= 2.0.0"
+    }
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "LICENSE": "a300b604c66de62cf6e923cca89c9d83",
+    "Modulefile": "f2520615cdfb6315db18c4e04387c201",
+    "README.md": "46456e4106d78ef3ad242fcc2d7e83e9",
+    "Rakefile": "e90d68823ff237c89224eb139f8926ad",
+    "manifests/init.pp": "ac8f9f875e7e399f474df95a83badb00",
+    "manifests/params.pp": "18e46962cb88c4e56541ec43ff973a62",
+    "manifests/plugin/check_sar_perf.pp": "f387a6d96eb4a0f1961464fec0182899",
+    "manifests/plugin.pp": "2ac88da046d6aaa4b406399291a19a91",
+    "manifests/spec.pp": "c1ac38df924ea5342db2e8f6e6ab4254",
+    "spec/classes/nrpe_spec.rb": "7233366f9c76c5f2b0a4b888490132ce",
+    "spec/spec_helper.rb": "0db89c9a486df193c0e40095422e19dc",
+    "templates/nrpe-init-debian.erb": "6f62cfefa84dd3cc424054b449fe09e0",
+    "templates/nrpe-init-redhat.erb": "d07a73f0deea4ee5d42fde6f00094580",
+    "templates/nrpe-init-solaris.erb": "9259e9eb807b961fd00081bef6c71f11",
+    "templates/nrpe.cfg.erb": "03e9205b30938e63fc7a3dfcb4fd4ff6",
+    "templates/plugin/check_sar_perf.cfg.erb": "2cb0cf9fea0b174eda68e3f750ff8c46",
+    "templates/plugin/check_sar_perf.py.erb": "5fed9cf913ced6b9b96c269dbd82cba2",
+    "templates/spec.erb": "055d4f22a02a677753cf922108b6e50c"
+  },
+  "source": "https://github.com/example42/puppet-nrpe",
+  "project_page": "http://www.example42.com",
+  "license": "Apache2"
+}
