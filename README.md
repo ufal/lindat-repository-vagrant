@@ -72,6 +72,20 @@ When puppet finishes Vagrant calls shell scripts e.g.,
 There are several reasons why they are not part of puppet (they could be in general).
 
 
+Populating with data
+--------------------
+
+The `lindat` box automatically imports sql dumps from the _Projects/dumps_ directory. The _setup.lindat.sh_ script searches for these three files:
+* user.sql
+* dspace.sql
+* utilities.sql
+
+At the moment, only the _user.sql_ is present which imports the dspace@lindat.cz user (the create-administrator script for DSpace 1.8.2 
+does not have appropriate command line options).
+
+
+
+
 Original DSpace
 ---------------
 
