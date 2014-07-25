@@ -83,9 +83,11 @@ fi
 # tomcat7 does not like our symlinks - hack it
 echo "===="
 echo "Tomcat7 does not like symlinks in webapps, copy our sole symlink"
+cd $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat && sudo git checkout bootstrap3
 sudo mv $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link
 sudo mkdir $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat 
 sudo cp -R $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link/* $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat
+
 
 #
 #
