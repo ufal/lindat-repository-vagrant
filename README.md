@@ -84,6 +84,13 @@ At the moment, only the _user.sql_ is present which imports the dspace@lindat.cz
 does not have appropriate command line options).
 
 
+TODOs
+-----
+
+Additional tweaking is needed fot the LINDAT/CLARIN repository in the vagrant box:
+* apache redirects for the autocomplete to work properly   
+
+
 
 
 Original DSpace
