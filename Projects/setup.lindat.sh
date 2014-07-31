@@ -45,15 +45,7 @@ git clone $VCS_BRANCH https://svn.ms.mff.cuni.cz/repository/ufal_dl $DSPACE_SOUR
 echo "===="
 echo "Copying LINDAT/CLARIN specific configuration from config directory"
 cp $DSPACE_BASE_CONFIG_DIRECTORY/local.conf $DSPACE_SOURCE_DIRECTORY/config/local.conf
-rm $DSPACE_SOURCE_DIRECTORY/scripts/variable
-cp $DSPACE_BASE_CONFIG_DIRECTORY/variable $DSPACE_SOURCE_DIRECTORY/scripts/variable
-
-#
-#
-
-echo "===="
-echo "Creating local git repositories for configuration"
-cd $TOMCAT_CONF && sudo git init .
+cp $DSPACE_BASE_CONFIG_DIRECTORY/variable.makefile $DSPACE_SOURCE_DIRECTORY/config/
 
 #
 #
@@ -62,10 +54,7 @@ echo "===="
 echo "Creating dspace and utilities DB tables"
 
 cd $DSPACE_SOURCE_DIRECTORY/scripts
-make create_database
-
-cd  $DSPACE_SOURCE_DIRECTORY/scripts
-make create_utilities_database
+make create_databases
 make setup
 make new_deploy
 
@@ -83,7 +72,6 @@ fi
 # tomcat7 does not like our symlinks - hack it
 echo "===="
 echo "Tomcat7 does not like symlinks in webapps, copy our sole symlink"
-cd $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat && sudo git checkout bootstrap3
 sudo mv $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link
 sudo mkdir $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat 
 sudo cp -R $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link/* $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat
