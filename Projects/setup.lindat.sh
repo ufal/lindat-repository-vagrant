@@ -82,14 +82,6 @@ sudo cp -R $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link/* $TOMCAT_WEBAPPS/x
 echo "===="
 echo "Making solr visible from outside"
 cp $DSPACE_BASE_CONFIG_DIRECTORY/solr-web.xml $TOMCAT_WEBAPPS/solr/WEB-INF/web.xml
-sudo make grant_rights
-
-# needed e.g., by tomcat-users (see lindat.pp)
-# give time for webapps to initialise - we need them to be accessible below
-echo "===="
-echo "Restarting and waiting for 30 seconds"
-sudo make restart
-sleep 30
 
 
 # hardcode this one - should be read from local.conf
@@ -140,6 +132,14 @@ sudo $DSPACE_INSTALLATION_DIRECTORY/bin/dspace update-discovery-index
 make add_cronjobs
 make update_oai
 sudo make grant_rights
+
+
+# needed e.g., by tomcat-users (see lindat.pp)
+# give time for webapps to initialise - we need them to be accessible below
+echo "===="
+echo "Restarting and waiting for 30 seconds"
+sudo make restart
+sleep 30
 
 #
 sudo updatedb

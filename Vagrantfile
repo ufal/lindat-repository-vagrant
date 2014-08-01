@@ -97,6 +97,7 @@ Vagrant.configure("2") do |config|
         lindat.vm.provision "shell", path: "./Projects/libs/setup.jenkins.sh"
         lindat.vm.provision "shell", path: "./Projects/libs/setup.munin.sh"
         lindat.vm.provision "shell", path: "./Projects/setup.lindat.sh"
+        lindat.vm.provision "shell", path: "./Projects/setup.lindat.fill.with.data.sh"
     end
 
     #=================
