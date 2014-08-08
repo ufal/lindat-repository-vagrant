@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
             puppet.facter = {
                 "java_version"  => "7",
                 "tom_version"   => "7",
-                "repo_branch"   => "master-dev",
+                "repo_branch"   => "master",
                 "fqdn"          => "dspace.lindat.dev",
             }
             #puppet.options = ['--verbose']

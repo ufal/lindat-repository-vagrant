@@ -40,7 +40,7 @@ if [ ! -d DSPACE_SOURCE_DIRECTORY/.git ]; then
     sudo chmod -R 777 $DSPACE_SOURCE_DIRECTORY
     sudo rm -rf $DSPACE_SOURCE_DIRECTORY
 fi
-git clone $VCS_BRANCH https://svn.ms.mff.cuni.cz/repository/ufal_dl $DSPACE_SOURCE_DIRECTORY
+git clone $VCS_BRANCH https://github.com/ufal/lindat-repository.git $DSPACE_SOURCE_DIRECTORY
 
 echo "===="
 echo "Copying LINDAT/CLARIN specific configuration from config directory"
