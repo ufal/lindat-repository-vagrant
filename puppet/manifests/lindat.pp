@@ -30,3 +30,13 @@ import "common"
 
 # LINDAT/CLARIN installation is done by a shell script, see Vagrant file
 # Projects/setup.lindat.sh
+
+class { 'mysql::server':
+  config_hash => { 'root_password' => 'lindat' }
+} 
+mysql::db { 'piwik':
+  user     => 'lindat',
+  password => 'lindat',
+  host     => 'localhost',
+  grant    => ['all'],
+} 

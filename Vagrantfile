@@ -97,6 +97,7 @@ Vagrant.configure("2") do |config|
         lindat.vm.provision "shell", path: "./Projects/libs/setup.jenkins.sh"
         lindat.vm.provision "shell", path: "./Projects/libs/setup.munin.sh"
         lindat.vm.provision "shell", path: "./Projects/setup.lindat.sh"
+        #lindat.vm.provision "shell", path: "./Projects/setup.lindat.piwik.sh"
         lindat.vm.provision "shell", path: "./Projects/setup.lindat.fill.with.data.sh"
     end
 
@@ -109,6 +110,7 @@ Vagrant.configure("2") do |config|
         dspace4.vm.box = "precise64-dspace4.dspace"
         dspace4.vm.provider :virtualbox do |v|
             v.customize ["modifyvm", :id, "--name", "original-dspace-box"]
+            v.customize ["modifyvm", :id, "--ioapic", "on"]
             v.cpus = 2
         end    
         

@@ -8,20 +8,9 @@
 # installation wiki: http://svn.ms.mff.cuni.cz/redmine/projects/dspace-modifications/wiki/CompilationInstallation
 #
 # TODO: mod_jk + autocomplete url
+start=`date +%s`
 
-
-VCS_BRANCH="-b $REPO_BRANCH"
-# env TOM_VERSION passed from Vagrantfile -> puppet -> OS environment 
-TOMCAT=tomcat$TOM_VERSION
-TOMCAT_CONF=/etc/$TOMCAT
-TOMCAT_WEBAPPS=/var/lib/$TOMCAT/webapps
-TOMCAT_GRP=$TOMCAT
-
-INSTITUTE=vagrant-test
-DSPACE_INSTANCE_NAME=repository
-DSPACE_SOURCE_DIRECTORY=/home/vagrant/Projects/lindat-repo-source
-DSPACE_INSTALLATION_DIRECTORY=/installations/dspace/dspace-1.8.2
-DSPACE_BASE_CONFIG_DIRECTORY=/home/vagrant/Projects/lindat-repo-configs
+source /home/vagrant/Projects/variables.sh
 
 #
 #
@@ -134,6 +123,11 @@ make update_oai
 sudo make grant_rights
 
 
+echo "=========="
+end=`date +%s`
+echo "This script took $((end-start)) seconds"
+echo "=========="
+
 # needed e.g., by tomcat-users (see lindat.pp)
 # give time for webapps to initialise - we need them to be accessible below
 echo "===="
@@ -143,3 +137,4 @@ sleep 30
 
 #
 sudo updatedb
+
