@@ -47,6 +47,7 @@ lr.db.name = postgres
 # If the database is not created yet, this name will be used to create the new database.
 # Be careful with the trailing spaces in the name!
 lr.database = dspace-1.8.2
+lr.database.port = 5432 
 
 # Connection URL of the database. Make sure you are using the correct port and if you are connecting to remote server,
 # verify that the port is accessible. Do not change the ${lr.database}, the database name will be substituted from above property.

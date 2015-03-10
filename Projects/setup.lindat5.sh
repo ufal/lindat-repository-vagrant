@@ -24,9 +24,8 @@ echo "======================================================================="
 echo "===="
 echo "Downloading LINDAT/CLARIN sources ($REPO_BRANCH)"
 
-if [ ! -d $DSPACE_CHECKOUT_DIRECTORY/.git ]; then
+if [ -d $DSPACE_CHECKOUT_DIRECTORY/.git ]; then
     echo "Removing already existing source tree"
-    sudo chmod -R 777 $DSPACE_CHECKOUT_DIRECTORY
     sudo rm -rf $DSPACE_CHECKOUT_DIRECTORY
 fi
 git clone $VCS_BRANCH https://github.com/vidiecan/DSpace.git $DSPACE_CHECKOUT_DIRECTORY
@@ -47,6 +46,7 @@ cp $DSPACE_BASE_CONFIG_DIRECTORY/variable.makefile $DSPACE_SOURCE_DIRECTORY/conf
 echo "===="
 echo "Creating dspace and utilities DB tables"
 
+export MAVEN_OPTS="-Xmx1g -Xms1g"
 cd $DSPACE_SOURCE_DIRECTORY/scripts
 make create_databases
 make setup
