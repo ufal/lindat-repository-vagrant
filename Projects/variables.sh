@@ -18,6 +18,7 @@ TOMCAT_GRP=$TOMCAT
 
 INSTITUTE=vagrant-test
 DSPACE_INSTANCE_NAME=repository
+DSPACE_CHECKOUT_DIRECTORY=/home/vagrant/sources/lindat_dspace5
 DSPACE_SOURCE_DIRECTORY=/home/vagrant/lindat-repo-source
 DSPACE_INSTALLATION_DIRECTORY=/installations/dspace/dspace-1.8.2
 DSPACE_BASE_CONFIG_DIRECTORY=/home/vagrant/Projects/lindat-repo-configs
