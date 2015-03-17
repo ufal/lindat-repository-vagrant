@@ -332,3 +332,6 @@ http.proxy.host =
 http.proxy.port =
 handle.canonical.prefix = http://hdl.handle.net/
 handle.prefix = 123456789
+
+loglevel.other=INFO
+loglevel.dspace=INFO

@@ -24,6 +24,11 @@ echo "======================================================================="
 echo "===="
 echo "Downloading LINDAT/CLARIN sources ($REPO_BRANCH)"
 
+if [ -d $DSPACE_SOURCE_DIRECTORY ]; then
+    echo "Removing working directory"
+    sudo rm -rf $DSPACE_SOURCE_DIRECTORY
+fi
+
 if [ -d $DSPACE_CHECKOUT_DIRECTORY/.git ]; then
     echo "Removing already existing source tree"
     sudo rm -rf $DSPACE_CHECKOUT_DIRECTORY
