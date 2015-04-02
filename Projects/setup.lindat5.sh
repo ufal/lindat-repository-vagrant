@@ -42,7 +42,7 @@ popd
 
 echo "===="
 echo "Copying LINDAT/CLARIN specific configuration from config directory"
-cp $DSPACE_BASE_CONFIG_DIRECTORY/local.conf5 $DSPACE_SOURCE_DIRECTORY/config/local.conf
+cp $DSPACE_BASE_CONFIG_DIRECTORY/local.conf5 $DSPACE_SOURCE_DIRECTORY/sources/local.properties
 cp $DSPACE_BASE_CONFIG_DIRECTORY/variable.makefile $DSPACE_SOURCE_DIRECTORY/config/
 
 #
@@ -54,7 +54,6 @@ echo "Creating dspace and utilities DB tables"
 export MAVEN_OPTS="-Xmx1g -Xms1g"
 cd $DSPACE_SOURCE_DIRECTORY/scripts
 make create_databases
-make setup
 make new_deploy
 
 #

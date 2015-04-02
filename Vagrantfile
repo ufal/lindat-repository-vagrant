@@ -29,8 +29,19 @@ Vagrant.configure("2") do |config|
 
     # if you do not know what it is - ignore
     if Vagrant.has_plugin?('vagrant-cachier')
-       # http://fgrehm.viewdocs.io/vagrant-cachier
+       config.cache.auto_detect = true
+
+       # set vagrant-cachier scope to :box, so other projects that share the
+       # vagrant box will be able to used the same cached files
        config.cache.scope = :box
+
+       # and lets specifically use the apt cache (note, this is a Debian-ism)
+       config.cache.enable :apt
+
+       # use the generic cache bucket for Maven
+       config.cache.enable :generic, {
+             "maven" => { cache_dir: "/root/.m2/repository" },
+       }
     end
 
     # base box definition
