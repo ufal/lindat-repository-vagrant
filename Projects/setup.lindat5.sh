@@ -44,6 +44,7 @@ echo "===="
 echo "Copying LINDAT/CLARIN specific configuration from config directory"
 cp $DSPACE_BASE_CONFIG_DIRECTORY/local.conf5 $DSPACE_SOURCE_DIRECTORY/sources/local.properties
 cp $DSPACE_BASE_CONFIG_DIRECTORY/variable.makefile $DSPACE_SOURCE_DIRECTORY/config/
+pushd $DSPACE_SOURCE_DIRECTORY/scripts && cp start_stack_example.old start_stack.sh && cp stop_stack_example.old stop_stack.sh && popd
 
 #
 #
