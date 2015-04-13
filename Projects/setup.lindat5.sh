@@ -33,7 +33,7 @@ if [ -d $DSPACE_CHECKOUT_DIRECTORY/.git ]; then
     echo "Removing already existing source tree"
     sudo rm -rf $DSPACE_CHECKOUT_DIRECTORY
 fi
-git clone $VCS_BRANCH https://github.com/vidiecan/DSpace.git $DSPACE_CHECKOUT_DIRECTORY
+git clone $VCS_BRANCH https://github.com/ufal/lindat-dspace.git $DSPACE_CHECKOUT_DIRECTORY
 pushd $DSPACE_CHECKOUT_DIRECTORY/utilities/project_helpers/
 bash ./setup.sh $DSPACE_SOURCE_DIRECTORY
 popd

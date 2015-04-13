@@ -75,6 +75,44 @@ Vagrant.configure("2") do |config|
 
    
     #=================
+    # set up LINDAT/CLARIN repository with dspace5
+    #
+    config.vm.define "lindat5", autostart: false do |lindat5|
+        lindat5.vm.hostname = "dspace.lindat5.dev"
+        lindat5.vm.network :private_network, ip: "33.33.33.80"
+        lindat5.vm.box = "precise64-lindat5.dspace"
+        lindat5.vm.provider :virtualbox do |v|
+            v.customize ["modifyvm", :id, "--name", "lindat5-dspace-box"]
+            v.cpus = 1
+        end    
+        
+        # Shell script to set apt sources.list to something appropriate (close to you, and actually up) via apt-spy2
+        #
+        config.vm.provision :puppet do |puppet|
+            puppet.manifests_path = "puppet/manifests"
+            puppet.module_path = "puppet/modules"
+            puppet.manifest_file  = "lindat.pp"
+            puppet.facter = {
+                "java_version"  => "7",
+                "tom_version"   => "7",
+                "repo_branch"   => "lindat",
+                "fqdn"          => "dspace.lindat5.dev",
+            }
+            #puppet.options = ['--verbose']
+            #puppet.options = ['--graph']
+        end
+    
+        # set up our environment
+        #
+        lindat5.vm.provision "shell", path: "./Projects/libs/setup.probe.sh"
+        lindat5.vm.provision "shell", path: "./Projects/libs/setup.jenkins.sh"
+        lindat5.vm.provision "shell", path: "./Projects/libs/setup.munin.sh"
+        lindat5.vm.provision "shell", path: "./Projects/setup.lindat5.sh"
+        #lindat5.vm.provision "shell", path: "./Projects/setup.lindat.piwik.sh"
+        lindat5.vm.provision "shell", path: "./Projects/setup.lindat.fill.with.data.sh"
+    end
+
+    #=================
     # set up LINDAT/CLARIN repository
     #
     config.vm.define "lindat" do |lindat|
@@ -104,50 +142,12 @@ Vagrant.configure("2") do |config|
     
         # set up our environment
         #
-        #lindat.vm.provision "shell", path: "./Projects/libs/setup.probe.sh"
-        #lindat.vm.provision "shell", path: "./Projects/libs/setup.jenkins.sh"
-        #lindat.vm.provision "shell", path: "./Projects/libs/setup.munin.sh"
+        lindat.vm.provision "shell", path: "./Projects/libs/setup.probe.sh"
+        lindat.vm.provision "shell", path: "./Projects/libs/setup.jenkins.sh"
+        lindat.vm.provision "shell", path: "./Projects/libs/setup.munin.sh"
         lindat.vm.provision "shell", path: "./Projects/setup.lindat.sh"
-        #lindat.vm.provision "shell", path: "./Projects/setup.lindat.piwik.sh"
+        lindat.vm.provision "shell", path: "./Projects/setup.lindat.piwik.sh"
         lindat.vm.provision "shell", path: "./Projects/setup.lindat.fill.with.data.sh"
-    end
-
-    #=================
-    # set up LINDAT/CLARIN repository with dspace5
-    #
-    config.vm.define "lindat5", autostart: false do |lindat5|
-        lindat5.vm.hostname = "dspace.lindat5.dev"
-        lindat5.vm.network :private_network, ip: "33.33.33.80"
-        lindat5.vm.box = "precise64-lindat5.dspace"
-        lindat5.vm.provider :virtualbox do |v|
-            v.customize ["modifyvm", :id, "--name", "lindat5-dspace-box"]
-            v.cpus = 1
-        end    
-        
-        # Shell script to set apt sources.list to something appropriate (close to you, and actually up) via apt-spy2
-        #
-        config.vm.provision :puppet do |puppet|
-            puppet.manifests_path = "puppet/manifests"
-            puppet.module_path = "puppet/modules"
-            puppet.manifest_file  = "lindat.pp"
-            puppet.facter = {
-                "java_version"  => "7",
-                "tom_version"   => "7",
-                "repo_branch"   => "lindat_changes",
-                "fqdn"          => "dspace.lindat5.dev",
-            }
-            #puppet.options = ['--verbose']
-            #puppet.options = ['--graph']
-        end
-    
-        # set up our environment
-        #
-        lindat5.vm.provision "shell", path: "./Projects/libs/setup.probe.sh"
-        lindat5.vm.provision "shell", path: "./Projects/libs/setup.jenkins.sh"
-        lindat5.vm.provision "shell", path: "./Projects/libs/setup.munin.sh"
-        lindat5.vm.provision "shell", path: "./Projects/setup.lindat5.sh"
-        #lindat5.vm.provision "shell", path: "./Projects/setup.lindat.piwik.sh"
-        lindat5.vm.provision "shell", path: "./Projects/setup.lindat.fill.with.data.sh"
     end
 
     #=================
