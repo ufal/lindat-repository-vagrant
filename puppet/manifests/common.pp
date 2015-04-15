@@ -144,8 +144,15 @@ class { 'apache':
 }
 apache::module { 'rewrite': 
 }
+apache::module { 'proxy': 
+}
+apache::module { 'proxy_http': 
+}
+apache::module { 'proxy_ajp': 
+}
 
 apache::vhost { 'default':
+  template     => 'apache/virtualhost/my_vhost.conf.erb',
   server_admin => 'vagrant@localhost',
   port         => '80',
   priority     => '',
