@@ -78,10 +78,9 @@ sudo cp -R $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link/* $TOMCAT_WEBAPPS/x
 
 #
 #
-#THIS NEEDS TO BE UPDATED WRT NEW SOLR...
 #echo "===="
 #echo "Making solr visible from outside"
-#cp $DSPACE_BASE_CONFIG_DIRECTORY/solr-web.xml $TOMCAT_WEBAPPS/solr/WEB-INF/web.xml
+cp $DSPACE_BASE_CONFIG_DIRECTORY/solr-web.xml $TOMCAT_WEBAPPS/solr/WEB-INF/web.xml
 
 
 # hardcode this one - should be read from local.conf
