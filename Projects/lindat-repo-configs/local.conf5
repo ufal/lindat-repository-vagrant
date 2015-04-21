@@ -24,11 +24,11 @@ lr.harvestable.assetstore =
 
 # DSpace host name - should match base URL. Do not include protocol i.e. http or https and do not include port, this is only the name of server.
 # Also do not use localhost because using this property some external links will be generated.
-lr.dspace.hostname = dspace.lindat.dev
+lr.dspace.hostname = dspace.lindat5.dev
 
 # DSpace base URL, the full url of the instance
 # !!! URL must NOT contain trailing slash !!!
-lr.dspace.baseUrl = http://dspace.lindat.dev:8080
+lr.dspace.baseUrl = http://dspace.lindat5.dev
 
 # DSpace URL, usually ending with /xmlui
 # DSpace base URL.  Include port number etc., but NOT trailing slash
@@ -96,11 +96,11 @@ lr.mail.server = 127.0.0.1
 lr.mail.server.disabled = true
 
 # UFAL: Contact information
-lr.help.mail = dspace-help@dspace.lindat.dev
+lr.help.mail = dspace-help@dspace.lindat5.dev
 lr.help.phone = +420-22191-4366
-lr.mail.from.address = noreply@dspace.lindat.dev
-lr.feedback.recipient = help@dspace.lindat.dev
-lr.info.recipient = dspace@dspace.lindat.dev
+lr.mail.from.address = noreply@dspace.lindat5.dev
+lr.feedback.recipient = help@dspace.lindat5.dev
+lr.info.recipient = dspace@dspace.lindat5.dev
 
 
 # solr server address that your instance is using. 

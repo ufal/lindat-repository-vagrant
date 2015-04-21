@@ -31,6 +31,9 @@
     RewriteRule ^/xmlui/JSON/solr/(.*)$  http://localhost:8080/solr/search/select/?q=*:*&rows=0&facet=on&wt=json&indent=true&facet.field=$1 [P,L]
     RewriteRule ^/solr/(.*) http://localhost:8080/solr/search/select/$1 [P,L]
 
+    ProxyPass /xmlui http://localhost:8080/xmlui
+    ProxyPassReverse /xmlui http://localhost:8080/xmlui
+
 
 <% if @bool_passenger -%>
     PassengerHighPerformance <%= @bool_passenger_high_performance ? "On" : "Off" %>
