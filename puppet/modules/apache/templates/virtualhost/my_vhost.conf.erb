@@ -34,6 +34,9 @@
     ProxyPass /xmlui http://localhost:8080/xmlui
     ProxyPassReverse /xmlui http://localhost:8080/xmlui
 
+    ProxyPass /oai http://localhost:8080/oai
+    ProxyPassReverse /oai http://localhost:8080/oai
+
 
 <% if @bool_passenger -%>
     PassengerHighPerformance <%= @bool_passenger_high_performance ? "On" : "Off" %>
