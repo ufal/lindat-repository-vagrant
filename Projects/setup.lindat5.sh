@@ -48,6 +48,12 @@ pushd $DSPACE_SOURCE_DIRECTORY/scripts && cp start_stack_example.old start_stack
 
 #
 #
+echo "==="
+echo "Install some maven libs"
+pushd $DSPACE_SOURCE_DIRECTORY/scripts && bash setup.prerequisites.sh && popd
+
+#
+#
 
 echo "===="
 echo "Creating dspace and utilities DB tables"
