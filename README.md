@@ -18,8 +18,14 @@ Requirements
 * vagrant
 * virtualbox (tested) 
 
+Branches
+--------
 
-What can you expect (lindat box)
+* master - exploits [lindat-dspace](https://github.com/ufal/lindat-dspace)
+* obsolete ```lindat-repository-old``` - exploits [lindat-repository](https://github.com/ufal/lindat-repository)
+
+
+What to expect (lindat box)
 --------------------------------
 
 After cloning this project and executing `vagrant up` (or better `vagrant up lindat5`) you will get a VM with:

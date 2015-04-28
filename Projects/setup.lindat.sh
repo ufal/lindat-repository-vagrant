@@ -24,17 +24,33 @@ echo "======================================================================="
 echo "===="
 echo "Downloading LINDAT/CLARIN sources ($REPO_BRANCH)"
 
-if [ ! -d DSPACE_SOURCE_DIRECTORY/.git ]; then
-    echo "Removing already existing source tree"
-    sudo chmod -R 777 $DSPACE_SOURCE_DIRECTORY
+if [ -d $DSPACE_SOURCE_DIRECTORY ]; then
+    echo "Removing working directory"
     sudo rm -rf $DSPACE_SOURCE_DIRECTORY
 fi
-git clone $VCS_BRANCH https://github.com/ufal/lindat-repository.git $DSPACE_SOURCE_DIRECTORY
+
+if [ -d $DSPACE_CHECKOUT_DIRECTORY/.git ]; then
+    echo "Removing already existing source tree"
+    sudo rm -rf $DSPACE_CHECKOUT_DIRECTORY
+fi
+git clone $VCS_BRANCH https://github.com/ufal/lindat-dspace.git $DSPACE_CHECKOUT_DIRECTORY
+pushd $DSPACE_CHECKOUT_DIRECTORY/utilities/project_helpers/
+bash ./setup.sh $DSPACE_SOURCE_DIRECTORY
+popd
+
+
 
 echo "===="
 echo "Copying LINDAT/CLARIN specific configuration from config directory"
-cp $DSPACE_BASE_CONFIG_DIRECTORY/local.conf $DSPACE_SOURCE_DIRECTORY/config/local.conf
+cp $DSPACE_BASE_CONFIG_DIRECTORY/local.conf5 $DSPACE_SOURCE_DIRECTORY/sources/local.properties
 cp $DSPACE_BASE_CONFIG_DIRECTORY/variable.makefile $DSPACE_SOURCE_DIRECTORY/config/
+pushd $DSPACE_SOURCE_DIRECTORY/scripts && cp start_stack_example.old start_stack.sh && cp stop_stack_example.old stop_stack.sh && popd
+
+#
+#
+echo "==="
+echo "Install some maven libs"
+pushd $DSPACE_SOURCE_DIRECTORY/scripts && bash setup.prerequisites.sh && popd
 
 #
 #
@@ -42,9 +58,9 @@ cp $DSPACE_BASE_CONFIG_DIRECTORY/variable.makefile $DSPACE_SOURCE_DIRECTORY/conf
 echo "===="
 echo "Creating dspace and utilities DB tables"
 
+export MAVEN_OPTS="-Xmx1g -Xms1g"
 cd $DSPACE_SOURCE_DIRECTORY/scripts
 make create_databases
-make setup
 make new_deploy
 
 #
@@ -68,8 +84,8 @@ sudo cp -R $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link/* $TOMCAT_WEBAPPS/x
 
 #
 #
-echo "===="
-echo "Making solr visible from outside"
+#echo "===="
+#echo "Making solr visible from outside"
 cp $DSPACE_BASE_CONFIG_DIRECTORY/solr-web.xml $TOMCAT_WEBAPPS/solr/WEB-INF/web.xml
 
 
@@ -77,6 +93,20 @@ cp $DSPACE_BASE_CONFIG_DIRECTORY/solr-web.xml $TOMCAT_WEBAPPS/solr/WEB-INF/web.x
 # - use the output of "pg_dump -C XX" as the source sql file
 #
  
+#
+#
+echo "===="
+echo "Testing/creating dspace db"
+$DSPACE_INSTALLATION_DIRECTORY/bin/dspace database migrate
+#
+#
+echo "===="
+echo "Creating administrator"
+$DSPACE_INSTALLATION_DIRECTORY/bin/dspace create-administrator -e "dspace@lindat.cz" -f "Mr." -l "Lindat" -p "dspace" -c "en"
+#
+#
+
+
 echo "===="
 echo "Trying to import DB dumps"
 
@@ -115,12 +145,12 @@ fi
 echo "===="
 echo "Preparing dspace - solr, statistics, cron jobs, oai"
 sudo make grant_rights
-make init_statistics
-make init_indicies
-sudo $DSPACE_INSTALLATION_DIRECTORY/bin/dspace update-discovery-index
-make add_cronjobs
-make update_oai
-sudo make grant_rights
+#make init_statistics
+#make init_indicies
+#sudo $DSPACE_INSTALLATION_DIRECTORY/bin/dspace update-discovery-index
+#make add_cronjobs
+#make update_oai
+#sudo make grant_rights
 
 
 echo "=========="
