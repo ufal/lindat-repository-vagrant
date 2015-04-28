@@ -151,6 +151,6 @@ Vagrant.configure("2") do |config|
     end
 
     # Message to display to user after 'vagrant up' completes
-    config.vm.post_up_message = "Setup of 'lindat repository' is now COMPLETE! Available services are listed at:\n\nhttp://CONF['ip_address']"
+    config.vm.post_up_message = "Setup of 'lindat repository' is now COMPLETE! Available services are listed at:\n\nhttp://#{CONF['ip_address']}"
     
 end
