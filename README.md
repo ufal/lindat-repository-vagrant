@@ -50,8 +50,8 @@ The below snippet shows several variables passed from Vagrant to puppet provisio
         puppet.facter = {
             "java_version"  => "7",
             "tom_version"   => "7",
-            "repo_branch"   => "master-dev",
-            "fqdn"          => "dspace.lindat.dev",
+            "repo_branch"   => "lindat",
+            "fqdn"          => "dspace.lindat5.dev",             
         }
 ```
 
@@ -80,8 +80,7 @@ The `lindat5` box automatically imports sql dumps from the _Projects/dumps_ dire
 * dspace.sql
 * utilities.sql
 
-At the moment, only the _user.sql_ is present which imports the dspace@lindat.cz user (the create-administrator script for DSpace 1.8.2 
-does not have appropriate command line options).
+At the moment, only the _user.sql_ is present which imports the dspace@lindat.cz user.
 
 
 
