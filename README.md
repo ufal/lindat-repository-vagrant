@@ -28,16 +28,16 @@ Branches
 What to expect (lindat box)
 --------------------------------
 
-After cloning this project and executing `vagrant up` (or better `vagrant up lindat5`) you will get a VM with:
+After cloning this project and executing `vagrant up` (or better `vagrant up lindat`) you will get a VM with:
 
-* Ubuntu 12.04 VM with `33.33.33.80` ip address and `dspace.lindat5.dev` hostname (update your hosts file to reach it under this name)
+* Ubuntu 12.04 VM with `33.33.33.80` ip address and `dspace.lindat.dev` hostname (update your hosts file to reach it under this name)
 * git, java, maven
 * apache, tomcat
 * [probe](https://code.google.com/p/psi-probe/), [nagios](http://www.nagios.org/), [munin](http://munin-monitoring.org/), [monit](http://mmonit.com/monit/), [phppgadmin](http://phppgadmin.sourceforge.net/doku.php)
 * [jenkins](http://jenkins-ci.org/) with a simple reload script
 * latest version of the LINDAT/CLARIN repository inside a _shared directory_ easily accessible between your computer the new VM (_Projects/..._ and _www_) 
 * out-of-the-box availability to debug DSpace on port _8000_ using Remote debugging e.g., in Eclipse. Use the sources from the shared directory.
-* overview Web page at http://33.33.33.80 or better (http://dspace.lindat5.dev) containg also users and passwords to the services
+* overview Web page at http://33.33.33.80 or better (http://dspace.lindat.dev) containing also users and passwords to the services
 
 
 BEWARE!!!
@@ -48,7 +48,7 @@ The VM exposes many crucial interfaces with no or simple passwords - do not make
 Internals
 ---------
 
-The project is a standard Vagrant + puppet. Vagrant resources are described in _Vagrantfile_ and contain definitions of three preconfigured boxes: `lindat5`, `lindat`  and `dspace4`. 
+The project is a standard Vagrant + puppet. Vagrant resources are described in _Vagrantfile_ and contain definitions of three preconfigured boxes: `lindat` and `dspace4`. 
 
 The below snippet shows several variables passed from Vagrant to puppet provisioner 
 
@@ -57,7 +57,7 @@ The below snippet shows several variables passed from Vagrant to puppet provisio
             "java_version"  => "7",
             "tom_version"   => "7",
             "repo_branch"   => "lindat",
-            "fqdn"          => "dspace.lindat5.dev",             
+            "fqdn"          => "dspace.lindat.dev",             
         }
 ```
 
@@ -72,7 +72,7 @@ When puppet finishes Vagrant calls shell scripts e.g.,
         lindat.vm.provision "shell", path: "./Projects/libs/setup.probe.sh"
         lindat.vm.provision "shell", path: "./Projects/libs/setup.jenkins.sh"
         lindat.vm.provision "shell", path: "./Projects/libs/setup.munin.sh"
-        lindat.vm.provision "shell", path: "./Projects/setup.lindat5.sh" 
+        lindat.vm.provision "shell", path: "./Projects/setup.lindat.sh" 
 ```
 
 There are several reasons why they are not part of puppet (they could be in general).
@@ -81,19 +81,16 @@ There are several reasons why they are not part of puppet (they could be in gene
 Populating with data
 --------------------
 
-The `lindat5` box automatically imports sql dumps from the _Projects/dumps_ directory. The _setup.lindat.sh_ script searches for these three files:
+The `lindat` box automatically imports sql dumps from the _Projects/dumps_ directory. The _setup.lindat.sh_ script searches for these three files:
 * user.sql
 * dspace.sql
 * utilities.sql
-
-At the moment, only the _user.sql_ is present which imports the dspace@lindat.cz user.
-
 
 
 Original DSpace
 ---------------
 
-There is another box called `dspace4` which installs dspace4 in a very similar environment as our `lindat5` box. A considerable stripped down and fixed version of the puppet module in [vagrant-dspace](https://github.com/DSpace/vagrant-dspace) was used. 
+There is another box called `dspace4` which installs dspace4 in a very similar environment as our `lindat` box. A considerable stripped down and fixed version of the puppet module in [vagrant-dspace](https://github.com/DSpace/vagrant-dspace) was used. 
 
 License
 --------
