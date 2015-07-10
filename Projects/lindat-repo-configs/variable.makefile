@@ -5,7 +5,7 @@
 # 
 
 # lindat settings
-LINDAT_COMMON_THEME_BRANCH=bootstrap3
+LINDAT_COMMON_THEME_FETCH=git checkout -f bootstrap3 && git pull
 
 # tomcat
 TOMCAT_VERSION=7
@@ -18,12 +18,11 @@ DSPACE_USER:=dspace
 
 # tool directories
 DIRECTORY_POSTGRESQL:=/var/lib/postgresql
-APACHE:=/etc/init.d/apache2
-SHIB:=/etc/init.d/shibboleth
-TOMCAT:=/etc/init.d/$(TOMCAT_USER)
-POSTGRES:=/etc/init.d/postgresql
-HANDLE_SERVER:=/etc/init.d/handle-server
 BACKUP2l:=/usr/sbin/backup2l
 
 # database settings - mostly for recovering 
-RESTORE_FROM_DATABASE=prod-dspace-1.8
+RESTORE_FROM_DATABASE=prod-dspace
+
+
+# you can use different versions e.g., export pg_dump=pg_dump --cluster
+export pg_dump=pg_dump

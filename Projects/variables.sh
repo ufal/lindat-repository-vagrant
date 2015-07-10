@@ -9,6 +9,7 @@
 #
 # TODO: mod_jk + autocomplete url
 
+
 VCS_BRANCH="-b $REPO_BRANCH"
 # env TOM_VERSION passed from Vagrantfile -> puppet -> OS environment 
 TOMCAT=tomcat$TOM_VERSION
@@ -18,9 +19,10 @@ TOMCAT_GRP=$TOMCAT
 
 INSTITUTE=vagrant-test
 DSPACE_INSTANCE_NAME=repository
-DSPACE_CHECKOUT_DIRECTORY=/home/vagrant/sources/lindat_dspace
-DSPACE_SOURCE_DIRECTORY=/home/vagrant/lindat-repo-source
-DSPACE_INSTALLATION_DIRECTORY=/installations/dspace/dspace-1.8.2
+DSPACE_SOURCE_DIRECTORY=/opt/lindat-dspace/sources/
+LINDAT_SCRIPTS_DIRECTORY=/opt/lindat-dspace/sources/../scripts
+LINDAT_CONFIG_DIRECTORY=/opt/lindat-dspace/sources/../config
+DSPACE_INSTALLATION_DIRECTORY=/opt/lindat-dspace/installation/
 DSPACE_BASE_CONFIG_DIRECTORY=/home/vagrant/Projects/lindat-repo-configs
 
 DSPACE_USER=dspace@lindat.cz 

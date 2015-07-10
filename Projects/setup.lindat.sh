@@ -29,37 +29,33 @@ if [ -d $DSPACE_SOURCE_DIRECTORY ]; then
     sudo rm -rf $DSPACE_SOURCE_DIRECTORY
 fi
 
-if [ -d $DSPACE_CHECKOUT_DIRECTORY/.git ]; then
-    echo "Removing already existing source tree"
-    sudo rm -rf $DSPACE_CHECKOUT_DIRECTORY
-fi
-git clone $VCS_BRANCH https://github.com/ufal/lindat-dspace.git $DSPACE_CHECKOUT_DIRECTORY
-pushd $DSPACE_CHECKOUT_DIRECTORY/utilities/project_helpers/
-bash ./setup.sh $DSPACE_SOURCE_DIRECTORY
+git clone $VCS_BRANCH https://github.com/ufal/lindat-dspace.git $DSPACE_SOURCE_DIRECTORY
+pushd $DSPACE_SOURCE_DIRECTORY/utilities/project_helpers/
+bash ./setup.sh $DSPACE_SOURCE_DIRECTORY/..
 popd
 
 
 
 echo "===="
 echo "Copying LINDAT/CLARIN specific configuration from config directory"
-cp $DSPACE_BASE_CONFIG_DIRECTORY/local.conf $DSPACE_SOURCE_DIRECTORY/sources/local.properties
-cp $DSPACE_BASE_CONFIG_DIRECTORY/variable.makefile $DSPACE_SOURCE_DIRECTORY/config/
-pushd $DSPACE_SOURCE_DIRECTORY/scripts && cp start_stack_example.old start_stack.sh && cp stop_stack_example.old stop_stack.sh && popd
+cp $DSPACE_BASE_CONFIG_DIRECTORY/local.conf $DSPACE_SOURCE_DIRECTORY/local.properties
+cp $DSPACE_BASE_CONFIG_DIRECTORY/variable.makefile $LINDAT_CONFIG_DIRECTORY
+pushd $LINDAT_SCRIPTS_DIRECTORY && cp start_stack_example.old start_stack.sh && cp stop_stack_example.old stop_stack.sh && popd
 
 #
 #
 echo "==="
-echo "Install some maven libs"
-pushd $DSPACE_SOURCE_DIRECTORY/scripts && bash setup.prerequisites.sh && popd
+echo "Install prerequisites libs"
+pushd $LINDAT_SCRIPTS_DIRECTORY && bash setup.prerequisites.sh && popd
 
 #
 #
 
 echo "===="
-echo "Creating dspace and utilities DB tables"
+echo "Creating dspace and utilities databases"
 
-export MAVEN_OPTS="-Xmx1g -Xms1g"
-cd $DSPACE_SOURCE_DIRECTORY/scripts
+export MAVEN_OPTS="-Xmx2g -Xms1g"
+cd $LINDAT_SCRIPTS_DIRECTORY
 make create_databases
 make new_deploy
 
@@ -111,7 +107,7 @@ echo "===="
 echo "Trying to import DB dumps"
 
 SQL=$DSPACE_BASE_CONFIG_DIRECTORY/../dumps/user.sql
-DB="dspace-1.8.2"
+DB="lindat"
 if [ -f "$SQL" ]; then
     echo "===="
     echo "Importing User definition $SQL to $DB"
@@ -119,7 +115,7 @@ if [ -f "$SQL" ]; then
 fi
 
 SQL=$DSPACE_BASE_CONFIG_DIRECTORY/../dumps/dspace.sql
-DB="dspace-1.8.2"
+DB="lindat"
 if [ -f "$SQL" ]; then
     echo "===="
     echo "Importing DSpace DB from $SQL to $DB"
@@ -129,7 +125,7 @@ if [ -f "$SQL" ]; then
 fi
 
 SQL=$DSPACE_BASE_CONFIG_DIRECTORY/../dumps/utilities.sql
-DB="dspace-utilities-1.8.2"
+DB="lindat-utilities"
 if [ -f "$SQL" ]; then
     echo "===="
     echo "Importing utilities DB from $SQL to $DB"
@@ -167,4 +163,3 @@ sleep 30
 
 #
 sudo updatedb
-

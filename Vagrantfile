@@ -78,7 +78,7 @@ Vagrant.configure("2") do |config|
     #=================
     # set up LINDAT/CLARIN repository
     #
-    config.vm.define "lindat", autostart: false do |lindat|
+    config.vm.define "lindat", autostart: true do |lindat|
         lindat.vm.hostname = "dspace.lindat.dev"
         lindat.vm.network :private_network, ip: CONF['ip_address']
         lindat.vm.box = "precise64-lindat.dspace"

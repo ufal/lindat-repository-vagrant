@@ -9,10 +9,11 @@
 # Import few communities
 #
 
-DSPACE_INSTALLATION_DIRECTORY=/installations/dspace/dspace-1.8.2
+source /home/vagrant/Projects/variables.sh
+
 OAI_ENDPOINT=https://lindat.mff.cuni.cz/repository/oai/request
 METADATA_FORMAT=dim
-IMPORT_DEF=/home/vagrant/Projects/lindat-repo-configs/dspace-import-structure.xml
+IMPORT_DEF=$DSPACE_BASE_CONFIG_DIRECTORY/dspace-import-structure.xml
 IMPORT_OUTPUT=/tmp/dspace-com.xml
 # 1 - only metadata
 IMPORT_TYPE=1
