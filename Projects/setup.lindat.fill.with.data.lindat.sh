@@ -31,5 +31,5 @@ sudo $DSPACE_INSTALLATION_DIRECTORY/bin/dspace harvest -P -e $DSPACE_USER
 # harvest the selected one
 sudo $DSPACE_INSTALLATION_DIRECTORY/bin/dspace harvest -r -e $DSPACE_USER -c $COLLECTION_ID
 
-cd $DSPACE_SOURCE_DIRECTORY/scripts
+cd $LINDAT_SCRIPTS_DIRECTORY
 sudo make grant_rights
