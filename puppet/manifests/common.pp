@@ -13,6 +13,7 @@
 
 class {'apt':
   always_apt_update => true,
+  purge_sources_list => true,
 }
 
 Class['::apt::update'] -> Package <|
@@ -26,6 +27,61 @@ apt::key { '4F4EA0AAE5267A6C': }
 #apt::ppa { 'ppa:ondrej/php5-oldstable':
 #  require => Apt::Key['4F4EA0AAE5267A6C']
 #}
+
+apt::conf{ 'ubuntu':
+    ensure => present,
+    priority => '01',
+    content => "APT::Default-Release \"precise\";\n",
+}
+
+apt::source {'precise':
+    ensure => present,
+    location => "mirror://mirrors.ubuntu.com/mirrors.txt",
+    release => 'precise',
+    repos => 'main restricted universe multiverse',
+}
+
+apt::source {'precise-updates':
+    ensure => present,
+    location => "mirror://mirrors.ubuntu.com/mirrors.txt",
+    release => 'precise-updates',
+    repos => 'main restricted universe multiverse',
+}
+
+apt::source {'precise-backports':
+    ensure => present,
+    location => "mirror://mirrors.ubuntu.com/mirrors.txt",
+    release => 'precise-backports',
+    repos => 'main restricted universe multiverse',
+}
+
+apt::source {'precise-security':
+    ensure => present,
+    location => "mirror://mirrors.ubuntu.com/mirrors.txt",
+    release => 'precise-security',
+    repos => 'main restricted universe multiverse',
+}
+
+apt::source {'wily':
+    ensure => present,
+    location => "mirror://mirrors.ubuntu.com/mirrors.txt",
+    release => 'wily',
+    repos => 'main restricted universe multiverse',
+}
+
+apt::source {'openjdk-r-ppa-precise':
+    ensure => present,
+    location => 'http://ppa.launchpad.net/openjdk-r/ppa/ubuntu',
+    release => 'precise',
+    key => 'eb9b1d8886f44e2a',
+    repos => 'main',
+}
+
+apt::pin { 'tomcat7_wily':
+	packages => '*tomcat7* libecj-java libservlet3.0-java',
+	release => 'wily',
+	priority => "1006",
+}
 
 file { '/home/vagrant/.bash_aliases':
   ensure => 'present',
@@ -179,6 +235,7 @@ class { 'composer':
 class { "java":
     jdk => true,
     version => $java_version,
+    require => apt::source['openjdk-r-ppa-precise'],
 }
 
 # used from dspace
@@ -197,7 +254,7 @@ exec { "Update alternatives to Java ${jdk_version}":
 #
 
 class { "tomcat":
-    require => Class["java"],
+    require => [ Class["java"], apt::source['wily'] ],
 }
 
 # this one needs manual restart
@@ -212,6 +269,14 @@ file { "/etc/default/tomcat${tom_version}":
     source => "puppet:///modules/tomcat/tomcat${tom_version}",
     mode   => '0664',
     notify => Class['tomcat'],
+}
+
+# set init.d script 
+file { "/etc/init.d/tomcat${tom_version}":
+    ensure => 'present',
+    source => "puppet:///modules/tomcat/init_tomcat${tom_version}",
+    mode   => '0755',
+    require => Class['tomcat'],
 }
 
 

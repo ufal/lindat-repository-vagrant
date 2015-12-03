@@ -94,7 +94,7 @@ Vagrant.configure("2") do |config|
             puppet.module_path = "puppet/modules"
             puppet.manifest_file  = "lindat.pp"
             puppet.facter = {
-                "java_version"  => "7",
+                "java_version"  => "8",
                 "tom_version"   => "7",
                 "repo_branch"   => "lindat",
                 "fqdn"          => "dspace.lindat.dev",
@@ -106,7 +106,7 @@ Vagrant.configure("2") do |config|
         # set up our environment
         #
         lindat.vm.provision "shell", path: "./Projects/libs/setup.probe.sh"
-        lindat.vm.provision "shell", path: "./Projects/libs/setup.jenkins.sh"
+        #lindat.vm.provision "shell", path: "./Projects/libs/setup.jenkins.sh"
         lindat.vm.provision "shell", path: "./Projects/libs/setup.munin.sh"
         lindat.vm.provision "shell", path: "./Projects/setup.lindat.sh"
         #lindat.vm.provision "shell", path: "./Projects/setup.lindat.piwik.sh"

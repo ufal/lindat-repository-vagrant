@@ -17,9 +17,9 @@ echo "======================================================================="
 # Vagrantfile -> puppet -> OS environment variable
 TOMCAT=tomcat$TOM_VERSION
 
-PROBE_VER=2.3.3
+PROBE_VER=2.4.0
 echo "Downloading version ${PROBE_VER}"
-wget -q http://psi-probe.googlecode.com/files/probe-${PROBE_VER}.zip 
+wget -q https://github.com/psi-probe/psi-probe/releases/download/${PROBE_VER}/probe-${PROBE_VER}.zip
 unzip probe-${PROBE_VER}.zip -d /tmp
 sudo mv /tmp/probe.war /var/lib/$TOMCAT/webapps/probe.war
 sudo chown -R $TOMCAT:$TOMCAT /var/lib/$TOMCAT/webapps/
