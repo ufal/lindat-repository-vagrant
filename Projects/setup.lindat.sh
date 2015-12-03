@@ -68,6 +68,7 @@ if [ ! -f $TOMCAT_WEBAPPS/oai ]; then
     ln -s $DSPACE_INSTALLATION_DIRECTORY/webapps/oai $TOMCAT_WEBAPPS/oai 
     ln -s $DSPACE_INSTALLATION_DIRECTORY/webapps/solr $TOMCAT_WEBAPPS/solr
     ln -s $DSPACE_INSTALLATION_DIRECTORY/webapps/xmlui $TOMCAT_WEBAPPS/xmlui
+    ln -s $DSPACE_INSTALLATION_DIRECTORY/webapps/rest $TOMCAT_WEBAPPS/rest
 fi
 
 # tomcat7 does not like our symlinks - hack it
@@ -83,6 +84,10 @@ sudo cp -R $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link/* $TOMCAT_WEBAPPS/x
 #echo "===="
 #echo "Making solr visible from outside"
 cp $DSPACE_BASE_CONFIG_DIRECTORY/solr-web.xml $TOMCAT_WEBAPPS/solr/WEB-INF/web.xml
+
+# disable enforce https for rest
+cp $DSPACE_BASE_CONFIG_DIRECTORY/rest-web.xml $TOMCAT_WEBAPPS/rest/WEB-INF/web.xml
+
 
 
 # hardcode this one - should be read from local.conf
