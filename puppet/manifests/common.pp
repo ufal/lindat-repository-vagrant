@@ -347,16 +347,3 @@ file { '/etc/munin/apache.conf':
 class { 'sudo':
     config_file_replace => false, 
 }
-sudo::conf { 'admins':
-    priority => 10,
-    content  => "jenkins ALL=(root) NOPASSWD: /usr/bin/make setup, /usr/bin/make compile, /usr/bin/make install, /usr/bin/make create_utilities_database, /usr/bin/make update_lindat_common, /usr/bin/make check_lindat_common, /usr/bin/make restore_database, /usr/bin/make reload, /usr/bin/make update_utilities_database, /usr/bin/make create_database, /usr/bin/make clean_source, /usr/bin/make new_deploy, /usr/bin/make deploy_guru, /usr/bin/make init_statistics, /usr/bin/make init_indicies, /usr/bin/make update_discovery, /usr/bin/make restart, /etc/init.d/xvfb start, /usr/bin/ant, /etc/init.d/xvfb stop, /bin/chown, /usr/bin/mvn, /bin/chmod, /bin/ps, /installations/dspace/dspace-1.8.2/bin/dspace, /installations/dspace/dspace-1.8.2/bin/dspace update-discovery-index",
-}
-    
-#
-#
-
-class { 'jenkins':
-    source  => 'puppet:///modules/jenkins/jenkins', 
-    monitor      => true,
-    monitor_tool => [ "monit" ],
-}
