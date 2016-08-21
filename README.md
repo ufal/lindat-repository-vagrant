@@ -21,8 +21,8 @@ Requirements
 Branches
 --------
 
-* master - exploits [lindat-dspace](https://github.com/ufal/lindat-dspace)
-* obsolete ```lindat-repository-old``` - exploits [lindat-repository](https://github.com/ufal/lindat-repository)
+* master - uses [lindat-dspace](https://github.com/ufal/lindat-dspace)
+* obsolete ```lindat-repository-old``` - uses old [lindat-repository](https://github.com/ufal/lindat-repository)
 
 
 What to expect (lindat box)
