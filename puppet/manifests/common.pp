@@ -6,7 +6,6 @@
 # java,
 # nagios, munin, monit,
 # postgresql, phppgadmin
-# jenkins     
 #
 # Thanks to http://example42.com/ 
 #
