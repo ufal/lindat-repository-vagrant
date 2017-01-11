@@ -56,6 +56,7 @@ echo "Creating dspace and utilities databases"
 
 export MAVEN_OPTS="-Xmx2g -Xms1g"
 cd $LINDAT_SCRIPTS_DIRECTORY
+cp /home/vagrant/Projects/postinstall.sh ./
 make create_databases
 make new_deploy
 
@@ -70,25 +71,6 @@ if [ ! -f $TOMCAT_WEBAPPS/oai ]; then
     ln -s $DSPACE_INSTALLATION_DIRECTORY/webapps/xmlui $TOMCAT_WEBAPPS/xmlui
     ln -s $DSPACE_INSTALLATION_DIRECTORY/webapps/rest $TOMCAT_WEBAPPS/rest
 fi
-
-# tomcat7 does not like our symlinks - hack it
-echo "===="
-echo "Tomcat7 does not like symlinks in webapps, copy our sole symlink"
-sudo mv $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link
-sudo mkdir $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat 
-sudo cp -R $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat-link/* $TOMCAT_WEBAPPS/xmlui/themes/UFAL/lib/lindat
-
-
-#
-#
-#echo "===="
-#echo "Making solr visible from outside"
-cp $DSPACE_BASE_CONFIG_DIRECTORY/solr-web.xml $TOMCAT_WEBAPPS/solr/WEB-INF/web.xml
-
-# disable enforce https for rest
-cp $DSPACE_BASE_CONFIG_DIRECTORY/rest-web.xml $TOMCAT_WEBAPPS/rest/WEB-INF/web.xml
-
-
 
 # hardcode this one - should be read from local.conf
 # - use the output of "pg_dump -C XX" as the source sql file
