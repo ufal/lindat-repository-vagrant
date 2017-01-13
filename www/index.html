@@ -104,26 +104,21 @@
 
             <li>hostname
                 <div class="alert alert-info" role="alert">
-                <strong>lindat5 box: <a href="dspace.lindat5.dev" target="_blank" >dspace.lindat5.dev</a></strong><br /> 
                 lindat box: <a href="dspace.lindat.dev" target="_blank" >dspace.lindat.dev</a><br /> 
-                dspace4 box: <a href="dspace.dev" target="_blank" >dspace.dev</a>
                 </div></li>
             <li>ip address (33.33.33.XX)
                 <div class="alert alert-info" role="alert">
-                <strong>lindat5 box: <a href="33.33.33.80" target="_blank" >33.33.33.80</a><br /></strong> 
-                lindat box: <a href="33.33.33.78" target="_blank" >33.33.33.78</a><br />
-                dspace4 box: <a href="33.33.33.79" target="_blank" >33.33.33.79</a>
+                lindat box: <a href="33.33.33.80" target="_blank" >33.33.33.80</a><br />
                 </div></li>
 
-            <li class="alert alert-danger" role="alert">The host for the lindat5 box is <strong>dspace.lindat5.dev</strong>
+            <li class="alert alert-danger" role="alert">The host for the lindat box is <strong>dspace.lindat.dev</strong>
             so update your hosts file (e.g., on windows add <br/>
-            <strong>33.33.33.80 dspace.lindat5.dev</strong><br/>
+            <strong>33.33.33.80 dspace.lindat.dev</strong><br/>
             to c:\Windows\System32\drivers\etc\hosts).
-            The host for the dspace4 box is dspace.dev
             </li>
         
-            <li class="alert alert-warning" role="alert">solr was made available by removing filter LocalHostRestrictionFilter 
-            from tomcat's webapps/solr/WEB-INF/web.xml - in case of redeploying you need to do it again 
+            <li class="alert alert-warning" role="alert">solr and rest were made available by removing filters
+                from webapps/{solr,rest}/WEB-INF/web.xml postinstall.sh should take care of it 
             </li>
         </ul>
     </div>
