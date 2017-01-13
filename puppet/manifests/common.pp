@@ -76,6 +76,14 @@ apt::source {'openjdk-r-ppa-precise':
     repos => 'main',
 }
 
+apt::source {'git-core-ppa-precise':
+    ensure => present,
+    location => 'http://ppa.launchpad.net/git-core/ppa/ubuntu',
+    release => 'precise',
+    key => 'E1DF1F24',
+    repos => 'main',
+}
+
 apt::pin { 'tomcat8_wily':
 	packages => '*tomcat8* libecj-java libservlet3.0-java',
 	release => 'wily',
