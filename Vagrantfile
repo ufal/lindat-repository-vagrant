@@ -95,8 +95,8 @@ Vagrant.configure("2") do |config|
             puppet.manifest_file  = "lindat.pp"
             puppet.facter = {
                 "java_version"  => "8",
-                "tom_version"   => "7",
-                "repo_branch"   => "lindat",
+                "tom_version"   => "8",
+                "repo_branch"   => "clarin-dev",
                 "fqdn"          => "dspace.lindat.dev",
             }
             #puppet.options = ['--verbose']
@@ -106,48 +106,10 @@ Vagrant.configure("2") do |config|
         # set up our environment
         #
         lindat.vm.provision "shell", path: "./Projects/libs/setup.probe.sh"
-        #lindat.vm.provision "shell", path: "./Projects/libs/setup.jenkins.sh"
         lindat.vm.provision "shell", path: "./Projects/libs/setup.munin.sh"
         lindat.vm.provision "shell", path: "./Projects/setup.lindat.sh"
         #lindat.vm.provision "shell", path: "./Projects/setup.lindat.piwik.sh"
         lindat.vm.provision "shell", path: "./Projects/setup.lindat.fill.with.data.sh"
-    end
-
-    #=================
-    # set up DSpaceX repository
-    #
-    config.vm.define "dspace4", autostart: false do |dspace4|
-        dspace4.vm.hostname = "dspace.dev"
-        dspace4.vm.network :private_network, ip: "33.33.33.79"
-        dspace4.vm.box = "precise64-dspace4.dspace"
-        dspace4.vm.provider :virtualbox do |v|
-            v.customize ["modifyvm", :id, "--name", "original-dspace-box"]
-            v.customize ["modifyvm", :id, "--ioapic", "on"]
-            v.cpus = 2
-        end    
-        
-        # Shell script to set apt sources.list to something appropriate (close to you, and actually up) via apt-spy2
-        #
-        config.vm.provision :puppet do |puppet|
-            puppet.manifests_path = "puppet/manifests"
-            puppet.module_path = "puppet/modules"
-            puppet.manifest_file  = "dspace.pp"
-            puppet.facter = {
-                "java_version" => "7",
-                "tom_version"  => "7",
-                "repo_branch"  => "dspace-4_x",
-                "fqdn"         => "dspace.dev",
-            }
-            puppet.options = ['--verbose']
-            #puppet.options = ['--graph']
-        end
-        
-        # use args for other machines
-        dspace4.vm.provision "shell", path: "./Projects/libs/setup.probe.sh"
-        #dspace4.vm.provision "shell", path: "./Projects/libs/setup.jenkins.sh"
-        dspace4.vm.provision "shell", path: "./Projects/libs/setup.munin.sh"
-        dspace4.vm.provision "shell", path: "./Projects/setup.dspace.sh"
-        
     end
 
     # Message to display to user after 'vagrant up' completes

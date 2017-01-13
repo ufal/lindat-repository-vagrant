@@ -10,7 +10,7 @@ URL_LINDAT_COMMON_GIT   :=https://github.com/ufal/lindat-common.git
 LINDAT_COMMON_THEME_FETCH=git fetch && git checkout -f releases && git pull
 
 # tomcat
-TOMCAT_VERSION=7
+TOMCAT_VERSION=8
 TOMCAT_USER:=tomcat$(TOMCAT_VERSION)
 TOMCAT_GROUP:=tomcat$(TOMCAT_VERSION)
 TOMCAT_CONF:=/etc/$(TOMCAT_USER)
