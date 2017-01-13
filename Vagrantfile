@@ -95,7 +95,7 @@ Vagrant.configure("2") do |config|
             puppet.manifest_file  = "lindat.pp"
             puppet.facter = {
                 "java_version"  => "8",
-                "tom_version"   => "7",
+                "tom_version"   => "8",
                 "repo_branch"   => "clarin-dev",
                 "fqdn"          => "dspace.lindat.dev",
             }

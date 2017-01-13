@@ -40,7 +40,7 @@ echo "===="
 echo "Copying LINDAT/CLARIN specific configuration from config directory"
 cp $DSPACE_BASE_CONFIG_DIRECTORY/local.conf $DSPACE_SOURCE_DIRECTORY/local.properties
 cp $DSPACE_BASE_CONFIG_DIRECTORY/variable.makefile $LINDAT_CONFIG_DIRECTORY
-pushd $LINDAT_SCRIPTS_DIRECTORY && cp start_stack_example.old start_stack.sh && cp stop_stack_example.old stop_stack.sh && popd
+pushd $LINDAT_SCRIPTS_DIRECTORY && sed -e 's/tomcat7/tomcat8/g' start_stack_example.old > start_stack.sh && sed -e 's/tomcat7/tomcat8/g' stop_stack_example.old > stop_stack.sh && popd
 
 #
 #

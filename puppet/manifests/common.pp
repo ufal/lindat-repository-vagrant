@@ -76,8 +76,8 @@ apt::source {'openjdk-r-ppa-precise':
     repos => 'main',
 }
 
-apt::pin { 'tomcat7_wily':
-	packages => '*tomcat7* libecj-java libservlet3.0-java',
+apt::pin { 'tomcat8_wily':
+	packages => '*tomcat8* libecj-java libservlet3.0-java',
 	release => 'wily',
 	priority => "1006",
 }
@@ -106,6 +106,18 @@ file_line { 'env_our_java':
 file_line { 'env_our_repo':
    path => '/home/vagrant/.bashrc',
    line => "export REPO_BRANCH=${repo_branch}",
+}
+file_line { 'java-home-environment':
+   path => '/etc/environment',
+   line => "JAVA_HOME=/usr/lib/jvm/java-1.${java_version}.0-openjdk-${architecture}/",
+   match => 'JAVA_HOME',
+}
+
+exec { 'remove-default-java-link':
+    path => '/usr/bin:/usr/sbin:/bin:/sbin',
+    command => "rm -f /usr/lib/jvm/default-java",
+    before => Class['tomcat'],
+    require => Package['java'],
 }
 
 # synch with the above!
@@ -262,21 +274,22 @@ tomcat::users  { 'users':
     filemode => '0664',
 }
 
-# set debugging and more memory 
+## set debugging and more memory 
 file { "/etc/default/tomcat${tom_version}":
     ensure => 'present',
     source => "puppet:///modules/tomcat/tomcat${tom_version}",
     mode   => '0664',
     notify => Class['tomcat'],
 }
-
-# set init.d script 
-file { "/etc/init.d/tomcat${tom_version}":
-    ensure => 'present',
-    source => "puppet:///modules/tomcat/init_tomcat${tom_version}",
-    mode   => '0755',
-    require => Class['tomcat'],
-}
+#
+## set init.d script 
+#file { "/etc/init.d/tomcat${tom_version}":
+#    ensure => 'present',
+#    source => "puppet:///modules/tomcat/init_tomcat${tom_version}",
+#    replace => "yes",
+#    mode   => '0755',
+#    require => Class['tomcat'],
+#}
 
 
 
